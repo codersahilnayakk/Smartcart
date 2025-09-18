@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Fresh Apples",
+    "description": "Crisp and juicy red apples, perfect for snacking.",
+    "price": 120,
+    "category": "Fruits",
+    "imageUrl": "https://i.imgur.com/gJAmfL9.jpg",
+    "stock": 100
+  },
+  {
+    "name": "Organic Bananas",
+    "description": "A bunch of ripe, organic bananas.",
+    "price": 50,
+    "category": "Fruits",
+    "imageUrl": "https://i.imgur.com/v8n5mKg.jpg",
+    "stock": 150
+  },
+  {
+    "name": "Broccoli",
+    "description": "Fresh green broccoli, rich in vitamins.",
+    "price": 80,
+    "category": "Vegetables",
+    "imageUrl": "https://i.imgur.com/dD0y1aB.jpg",
+    "stock": 80
+  },
+  {
+    "name": "Farm Fresh Carrots",
+    "description": "Sweet and crunchy carrots, great for salads.",
+    "price": 60,
+    "category": "Vegetables",
+    "imageUrl": "https://i.imgur.com/2xv7kpq.jpg",
+    "stock": 120
+  },
+  {
+    "name": "Amul Gold Milk",
+    "description": "1L pack of full cream milk.",
+    "price": 65,
+    "category": "Dairy",
+    "imageUrl": "https://i.imgur.com/sYqj9xL.jpg",
+    "stock": 200
+  },
+  {
+    "name": "Britannia Brown Bread",
+    "description": "A loaf of healthy whole wheat brown bread.",
+    "price": 45,
+    "category": "Bakery",
+    "imageUrl": "https://i.imgur.com/GzBVTz3.jpg",
+    "stock": 75
+  }
+]

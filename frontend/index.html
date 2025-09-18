@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCart - Fresh Groceries, Delivered Smarter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="index.js" defer></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'smart-green': '#27AE60',
+                        'smart-orange': '#F2994A',
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold text-smart-green cursor-pointer" onclick="showPage('home')">🛒 SmartCart</div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link text-gray-700" onclick="showPage('home')">Home</a>
+                    <a href="#" class="nav-link text-gray-700" onclick="showPage('products')">Products</a>
+                    <a href="#" class="nav-link text-gray-700" onclick="showPage('about')">About</a>
+                    <a href="contact.html" class="nav-link text-gray-700" onclick="showPage('contact')">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="relative p-2 text-gray-700 hover:text-smart-green transition-colors" onclick="showPage('cart')">
+                        🛒
+                        <span id="cart-count" class="cart-count absolute -top-1 -right-1 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                    <div id="auth-buttons">
+                        <button class="text-gray-700 hover:text-smart-green transition-colors mr-4" onclick="showPage('login')">Sign In</button>
+                        <button class="btn-primary text-white px-4 py-2 rounded-lg font-medium" onclick="showPage('signup')">Sign Up</button>
+                    </div>
+                    <div id="user-menu" class="hidden">
+                        <span id="user-name" class="text-gray-700 mr-4"></span>
+                        <button class="text-gray-700 hover:text-smart-green transition-colors" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero-bg text-white py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in-left">
+                        <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                            <span class="fade-in-up stagger-1">Fresh Groceries,</span><br>
+                            <span class="text-smart-orange fade-in-up stagger-2 typing-animation">Delivered Smarter</span>
+                        </h1>
+                        <p class="text-xl mb-8 text-green-100 fade-in-up stagger-3">Experience the future of grocery shopping with AI-powered recommendations, lightning-fast delivery, and premium quality products.</p>
+                        <div class="flex flex-col sm:flex-row gap-4 fade-in-up stagger-4">
+                            <button class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg pulse-glow" onclick="showPage('products')">
+                                🛍️ Shop Now
+                            </button>
+                            <button class="btn-secondary text-white px-8 py-4 rounded-xl font-semibold text-lg wiggle" onclick="showPage('products')">
+                                🔥 Explore Deals
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative fade-in-right">
+                        <div class="floating-animation">
+                            <svg viewBox="0 0 400 300" class="w-full h-auto">
+                                <!-- Shopping Cart -->
+                                <rect x="50" y="150" width="200" height="120" rx="15" fill="#ffffff" opacity="0.9" class="scale-in stagger-1"/>
+                                <circle cx="80" cy="290" r="15" fill="#27AE60" class="bounce-in stagger-2"/>
+                                <circle cx="220" cy="290" r="15" fill="#27AE60" class="bounce-in stagger-3"/>
+                                
+                                <!-- Groceries -->
+                                <circle cx="120" cy="180" r="20" fill="#F2994A" class="scale-in stagger-2"/>
+                                <rect x="140" y="160" width="30" height="40" rx="5" fill="#E74C3C" class="slide-in-bottom stagger-3"/>
+                                <circle cx="190" cy="175" r="18" fill="#27AE60" class="bounce-in stagger-4"/>
+                                <rect x="100" y="200" width="25" height="35" rx="3" fill="#3498DB" class="rotate-in stagger-5"/>
+                                <circle cx="180" cy="210" r="15" fill="#F39C12" class="scale-in stagger-6"/>
+                                
+                                <!-- Delivery Truck -->
+                                <rect x="280" y="100" width="80" height="40" rx="8" fill="#27AE60" class="fade-in-right stagger-4"/>
+                                <rect x="300" y="80" width="40" height="20" rx="5" fill="#2ECC71" class="slide-in-bottom stagger-5"/>
+                                <circle cx="295" cy="150" r="12" fill="#34495E" class="bounce-in stagger-6"/>
+                                <circle cx="345" cy="150" r="12" fill="#34495E" class="bounce-in stagger-6"/>
+                                
+                                <!-- Speed Lines -->
+                                <line x1="250" y1="90" x2="270" y2="90" stroke="#F2994A" stroke-width="3" class="fade-in-left stagger-5"/>
+                                <line x1="250" y1="100" x2="275" y2="100" stroke="#F2994A" stroke-width="3" class="fade-in-left stagger-6"/>
+                                <line x1="250" y1="110" x2="270" y2="110" stroke="#F2994A" stroke-width="3" class="fade-in-left stagger-4"/>
+                            </svg>
+                        </div>
+                        <!-- Floating Elements -->
+                        <div class="absolute -top-4 -right-4 text-4xl bounce-in stagger-6">✨</div>
+                        <div class="absolute top-1/2 -left-8 text-3xl wiggle">🎯</div>
+                        <div class="absolute bottom-4 right-8 text-3xl floating-animation">🚀</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Features -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose SmartCart?</h2>
+                    <p class="text-xl text-gray-600">Revolutionary features that make grocery shopping effortless</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card-hover bg-white p-8 rounded-2xl shadow-lg text-center fade-in-up stagger-1">
+                        <div class="w-16 h-16 bg-smart-green rounded-full flex items-center justify-center mx-auto mb-6 bounce-in stagger-2">
+                            <span class="text-2xl wiggle">📱</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Responsive Design</h3>
+                        <p class="text-gray-600">Seamless shopping experience across all devices - mobile, tablet, and desktop</p>
+                    </div>
+                    <div class="card-hover bg-white p-8 rounded-2xl shadow-lg text-center fade-in-up stagger-2">
+                        <div class="w-16 h-16 bg-smart-orange rounded-full flex items-center justify-center mx-auto mb-6 bounce-in stagger-3">
+                            <span class="text-2xl pulse-glow">🔒</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Secure Checkout</h3>
+                        <p class="text-gray-600">Enterprise-grade security with Node.js backend ensuring safe transactions</p>
+                    </div>
+                    <div class="card-hover bg-white p-8 rounded-2xl shadow-lg text-center fade-in-up stagger-3">
+                        <div class="w-16 h-16 bg-smart-green rounded-full flex items-center justify-center mx-auto mb-6 bounce-in stagger-4">
+                            <span class="text-2xl floating-animation">⚡</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Faster Orders</h3>
+                        <p class="text-gray-600">40% faster order completion with our streamlined checkout process</p>
+                    </div>
+                    <div class="card-hover bg-white p-8 rounded-2xl shadow-lg text-center fade-in-up stagger-4">
+                        <div class="w-16 h-16 bg-smart-orange rounded-full flex items-center justify-center mx-auto mb-6 bounce-in stagger-5">
+                            <span class="text-2xl rotate-in">⭐</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">92% Satisfaction</h3>
+                        <p class="text-gray-600">Exceptional customer satisfaction with premium quality and service</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SmartCart Advantage -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">SmartCart Advantage</h2>
+                    <p class="text-xl text-gray-600">Proven results that speak for themselves</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-12">
+                    <div class="text-center fade-in-up stagger-1">
+                        <div class="stat-number text-6xl font-bold mb-4 counter-animation">35%</div>
+                        <h3 class="text-2xl font-semibold mb-2 slide-in-bottom stagger-2">Bounce Rate ↓</h3>
+                        <p class="text-gray-600 fade-in-up stagger-3">Significant reduction in bounce rate through improved UX design</p>
+                    </div>
+                    <div class="text-center fade-in-up stagger-2">
+                        <div class="stat-number text-6xl font-bold mb-4 counter-animation">40%</div>
+                        <h3 class="text-2xl font-semibold mb-2 slide-in-bottom stagger-3">Order Completion ↑</h3>
+                        <p class="text-gray-600 fade-in-up stagger-4">Faster checkout process increases successful order completion</p>
+                    </div>
+                    <div class="text-center fade-in-up stagger-3">
+                        <div class="stat-number text-6xl font-bold mb-4 counter-animation">92%</div>
+                        <h3 class="text-2xl font-semibold mb-2 slide-in-bottom stagger-4">Customer Satisfaction</h3>
+                        <p class="text-gray-600 fade-in-up stagger-5">Outstanding customer feedback and satisfaction scores</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Selling Products -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">🔥 Best Selling Products</h2>
+                    <p class="text-xl text-gray-600">Customer favorites flying off our virtual shelves</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8" id="bestsellers-grid">
+                    <!-- Best sellers will be dynamically loaded -->
+                </div>
+                <div class="text-center mt-12">
+                    <button class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg" onclick="showPage('products')">
+                        View All Products →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Features Section -->
+        <section class="py-20 gradient-shift text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-4xl font-bold mb-4 bounce-in">🚀 Advanced Features</h2>
+                    <p class="text-xl text-green-100 fade-in-up stagger-2">Cutting-edge technology for the ultimate shopping experience</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card-hover bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-3xl">🤖</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">AI Recommendations</h3>
+                        <p class="text-green-100 text-center">Smart algorithms suggest products based on your preferences and shopping history</p>
+                    </div>
+                    <div class="card-hover bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-3xl">📍</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">Real-time Tracking</h3>
+                        <p class="text-green-100 text-center">Track your order from warehouse to doorstep with live GPS updates</p>
+                    </div>
+                    <div class="card-hover bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-3xl">💳</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">One-Click Checkout</h3>
+                        <p class="text-green-100 text-center">Save payment methods and addresses for lightning-fast checkout experience</p>
+                    </div>
+                    <div class="card-hover bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-3xl">🎯</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">Smart Lists</h3>
+                        <p class="text-green-100 text-center">Create and share shopping lists that learn from your buying patterns</p>
+                    </div>
+                    <div class="card-hover bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-3xl">🔔</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">Price Alerts</h3>
+                        <p class="text-green-100 text-center">Get notified when your favorite products go on sale or back in stock</p>
+                    </div>
+                    <div class="card-hover bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="text-3xl">🌱</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">Eco-Friendly</h3>
+                        <p class="text-green-100 text-center">Carbon-neutral delivery and sustainable packaging for a greener future</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weekly Deals -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">💰 Weekly Deals</h2>
+                    <p class="text-xl text-gray-600">Limited time offers - grab them before they're gone!</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="card-hover bg-gradient-to-br from-red-500 to-pink-600 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden">
+                        <div class="absolute top-4 right-4 bg-white text-red-500 px-3 py-1 rounded-full text-sm font-bold">50% OFF</div>
+                        <div class="text-6xl mb-4">🍓</div>
+                        <h3 class="text-2xl font-bold mb-2">Fresh Berries</h3>
+                        <p class="text-red-100 mb-4">Premium strawberries, blueberries, and raspberries</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg line-through text-red-200">$12.99</span>
+                                <span class="text-2xl font-bold ml-2">$6.49</span>
+                            </div>
+                            <button onclick="addDealToCart('berries')" class="bg-white text-red-500 px-4 py-2 rounded-lg font-semibold hover:bg-red-50 transition-colors">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-gradient-to-br from-green-500 to-emerald-600 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden">
+                        <div class="absolute top-4 right-4 bg-white text-green-500 px-3 py-1 rounded-full text-sm font-bold">30% OFF</div>
+                        <div class="text-6xl mb-4">🥬</div>
+                        <h3 class="text-2xl font-bold mb-2">Organic Greens</h3>
+                        <p class="text-green-100 mb-4">Fresh spinach, kale, and lettuce bundle</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg line-through text-green-200">$8.99</span>
+                                <span class="text-2xl font-bold ml-2">$6.29</span>
+                            </div>
+                            <button onclick="addDealToCart('greens')" class="bg-white text-green-500 px-4 py-2 rounded-lg font-semibold hover:bg-green-50 transition-colors">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-gradient-to-br from-orange-500 to-yellow-600 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden">
+                        <div class="absolute top-4 right-4 bg-white text-orange-500 px-3 py-1 rounded-full text-sm font-bold">25% OFF</div>
+                        <div class="text-6xl mb-4">🧀</div>
+                        <h3 class="text-2xl font-bold mb-2">Artisan Cheese</h3>
+                        <p class="text-orange-100 mb-4">Premium cheese selection from local farms</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-lg line-through text-orange-200">$15.99</span>
+                                <span class="text-2xl font-bold ml-2">$11.99</span>
+                            </div>
+                            <button onclick="addDealToCart('cheese')" class="bg-white text-orange-500 px-4 py-2 rounded-lg font-semibold hover:bg-orange-50 transition-colors">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">📋 How SmartCart Works</h2>
+                    <p class="text-xl text-gray-600">Simple steps to get fresh groceries delivered to your door</p>
+                </div>
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="step-circle w-20 h-20 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6 relative">
+                            1
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-smart-orange rounded-full flex items-center justify-center text-xs">📱</div>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Browse & Select</h3>
+                        <p class="text-gray-600">Browse our extensive catalog of fresh products and add your favorites to cart</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="step-circle w-20 h-20 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6 relative">
+                            2
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-smart-orange rounded-full flex items-center justify-center text-xs">⏰</div>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Choose Delivery</h3>
+                        <p class="text-gray-600">Select your preferred delivery time slot - same day or schedule for later</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="step-circle w-20 h-20 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6 relative">
+                            3
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-smart-orange rounded-full flex items-center justify-center text-xs">💳</div>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Secure Payment</h3>
+                        <p class="text-gray-600">Complete your order with our secure, one-click checkout process</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="step-circle w-20 h-20 rounded-full flex items-center justify-center text-white font-bold text-2xl mx-auto mb-6 relative">
+                            4
+                            <div class="absolute -top-2 -right-2 w-6 h-6 bg-smart-orange rounded-full flex items-center justify-center text-xs">🚚</div>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">Fresh Delivery</h3>
+                        <p class="text-gray-600">Receive your fresh groceries at your doorstep, perfectly packed and on time</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Stats Counter -->
+        <section class="py-20 bg-gradient-to-r from-smart-green to-smart-orange text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-4xl font-bold mb-4 bounce-in">📊 SmartCart by the Numbers</h2>
+                    <p class="text-xl text-green-100 fade-in-up stagger-2">Real-time statistics from our growing community</p>
+                </div>
+                <div class="grid md:grid-cols-4 gap-8">
+                    <div class="text-center fade-in-up stagger-1">
+                        <div class="text-5xl font-bold mb-2 counter-animation pulse-glow" id="orders-counter">1000+</div>
+                        <h3 class="text-xl font-semibold mb-2 slide-in-bottom stagger-2">Orders Delivered</h3>
+                        <p class="text-green-100 fade-in-up stagger-3">Fresh groceries delivered this month</p>
+                    </div>
+                    <div class="text-center fade-in-up stagger-2">
+                        <div class="text-5xl font-bold mb-2 counter-animation pulse-glow" id="customers-counter">500+</div>
+                        <h3 class="text-xl font-semibold mb-2 slide-in-bottom stagger-3">Happy Customers</h3>
+                        <p class="text-green-100 fade-in-up stagger-4">Satisfied shoppers and growing</p>
+                    </div>
+                    <div class="text-center fade-in-up stagger-3">
+                        <div class="text-5xl font-bold mb-2 counter-animation pulse-glow" id="products-counter">400+</div>
+                        <h3 class="text-xl font-semibold mb-2 slide-in-bottom stagger-4">Products Available</h3>
+                        <p class="text-green-100 fade-in-up stagger-5">Fresh items in our catalog</p>
+                    </div>
+                    <div class="text-center fade-in-up stagger-4">
+                        <div class="text-5xl font-bold mb-2 counter-animation pulse-glow" id="cities-counter">10+</div>
+                        <h3 class="text-xl font-semibold mb-2 slide-in-bottom stagger-5">Cities Served</h3>
+                        <p class="text-green-100 fade-in-up stagger-6">Locations with SmartCart delivery</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">💬 What Our Customers Say</h2>
+                    <p class="text-xl text-gray-600">Real feedback from satisfied SmartCart users</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="testimonial-card bg-white p-8 rounded-2xl shadow-lg border-l-4 border-smart-green">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-smart-green rounded-full flex items-center justify-center text-white font-bold mr-4">
+                                S
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Sarah Johnson</h4>
+                                <div class="text-smart-orange">⭐⭐⭐⭐⭐</div>
+                                <p class="text-sm text-gray-500">Verified Customer</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"SmartCart has revolutionized my grocery shopping. The interface is so intuitive and delivery is always on time! The AI recommendations are spot-on."</p>
+                    </div>
+                    <div class="testimonial-card bg-white p-8 rounded-2xl shadow-lg border-l-4 border-smart-orange">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-smart-orange rounded-full flex items-center justify-center text-white font-bold mr-4">
+                                M
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Mike Chen</h4>
+                                <div class="text-smart-orange">⭐⭐⭐⭐⭐</div>
+                                <p class="text-sm text-gray-500">Premium Member</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"The quality of products is exceptional and the checkout process is incredibly fast. I've saved hours every week since switching to SmartCart!"</p>
+                    </div>
+                    <div class="testimonial-card bg-white p-8 rounded-2xl shadow-lg border-l-4 border-smart-green">
+                        <div class="flex items-center mb-6">
+                            <div class="w-12 h-12 bg-smart-green rounded-full flex items-center justify-center text-white font-bold mr-4">
+                                E
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Emily Davis</h4>
+                                <div class="text-smart-orange">⭐⭐⭐⭐⭐</div>
+                                <p class="text-sm text-gray-500">Family Plan User</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 italic">"Love the mobile experience! I can shop for groceries anywhere, anytime. The smart lists feature has made meal planning so much easier for our family."</p>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <button class="btn-secondary text-white px-8 py-3 rounded-lg font-semibold" onclick="showMoreTestimonials()">
+                        Read More Reviews →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Signup -->
+        <section class="py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="mb-8">
+                    <h2 class="text-4xl font-bold mb-4">📧 Stay in the Loop</h2>
+                    <p class="text-xl text-gray-300">Get exclusive deals, new product alerts, and grocery tips delivered to your inbox</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" id="newsletter-email" placeholder="Enter your email address" 
+                           class="flex-1 px-6 py-4 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-smart-green">
+                    <button onclick="subscribeNewsletter()" class="btn-primary px-8 py-4 rounded-lg font-semibold whitespace-nowrap">
+                        Subscribe Now
+                    </button>
+                </div>
+                <p class="text-sm text-gray-400 mt-4">Join 50,000+ subscribers. Unsubscribe anytime.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login" class="page">
+        <section class="hero-bg min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div class="form-container max-w-md w-full space-y-8 p-8 rounded-2xl shadow-2xl">
+                <div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-smart-green mb-2">🛒 SmartCart</div>
+                        <h2 class="text-3xl font-bold text-gray-900">Welcome Back!</h2>
+                        <p class="mt-2 text-gray-600">Sign in to your account</p>
+                    </div>
+                </div>
+                <form class="mt-8 space-y-6" onsubmit="handleLogin(event)">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="login-email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input id="login-email" name="email" type="email" required 
+                                   class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                   placeholder="Enter your email">
+                        </div>
+                        <div>
+                            <label for="login-password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input id="login-password" name="password" type="password" required 
+                                   class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                   placeholder="Enter your password">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox" 
+                                   class="h-4 w-4 text-smart-green focus:ring-smart-green border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                        </div>
+                        <div class="text-sm">
+                            <a href="#" class="font-medium text-smart-green hover:text-green-500">Forgot password?</a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn-primary w-full text-white py-3 px-4 rounded-lg font-semibold text-lg">
+                            Sign In
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="text-gray-600">
+                            Don't have an account? 
+                            <a href="#" onclick="showPage('signup')" class="font-medium text-smart-green hover:text-green-500">Sign up here</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signup" class="page">
+        <section class="hero-bg min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <div class="form-container max-w-md w-full space-y-8 p-8 rounded-2xl shadow-2xl">
+                <div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-smart-green mb-2">🛒 SmartCart</div>
+                        <h2 class="text-3xl font-bold text-gray-900">Join SmartCart!</h2>
+                        <p class="mt-2 text-gray-600">Create your account to start shopping</p>
+                    </div>
+                </div>
+                <form class="mt-8 space-y-6" onsubmit="handleSignup(event)">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="signup-name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                            <input id="signup-name" name="name" type="text" required 
+                                   class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                   placeholder="Enter your full name">
+                        </div>
+                        <div>
+                            <label for="signup-email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input id="signup-email" name="email" type="email" required 
+                                   class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                   placeholder="Enter your email">
+                        </div>
+                        <div>
+                            <label for="signup-password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                            <input id="signup-password" name="password" type="password" required 
+                                   class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                   placeholder="Create a password" minlength="6">
+                        </div>
+                        <div>
+                            <label for="signup-confirm-password" class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                            <input id="signup-confirm-password" name="confirm-password" type="password" required 
+                                   class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none"
+                                   placeholder="Confirm your password" minlength="6">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center">
+                        <input id="terms" name="terms" type="checkbox" required
+                               class="h-4 w-4 text-smart-green focus:ring-smart-green border-gray-300 rounded">
+                        <label for="terms" class="ml-2 block text-sm text-gray-700">
+                            I agree to the <a href="#" class="text-smart-green hover:text-green-500">Terms and Conditions</a>
+                        </label>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn-primary w-full text-white py-3 px-4 rounded-lg font-semibold text-lg">
+                            Create Account
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="text-gray-600">
+                            Already have an account? 
+                            <a href="#" onclick="showPage('login')" class="font-medium text-smart-green hover:text-green-500">Sign in here</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Products Page -->
+    <div id="products" class="page">
+        <section class="py-20 bg-gray-50 min-h-screen">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl font-bold text-gray-900 mb-4">Fresh Products</h1>
+                    <p class="text-xl text-gray-600">Premium quality groceries delivered to your doorstep</p>
+                </div>
+                
+                <!-- Category Filter -->
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button onclick="filterProducts('all')" class="filter-btn btn-primary text-white px-6 py-2 rounded-lg font-medium">All</button>
+                    <button onclick="filterProducts('fruits')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-medium hover:bg-smart-green hover:text-white transition-colors">Fruits</button>
+                    <button onclick="filterProducts('vegetables')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-medium hover:bg-smart-green hover:text-white transition-colors">Vegetables</button>
+                    <button onclick="filterProducts('dairy')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-medium hover:bg-smart-green hover:text-white transition-colors">Dairy</button>
+                    <button onclick="filterProducts('bakery')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-medium hover:bg-smart-green hover:text-white transition-colors">Bakery</button>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8" id="product-grid">
+                    <!-- Products will be dynamically generated -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Cart Page -->
+    <div id="cart" class="page">
+        <section class="py-20 bg-gray-50 min-h-screen">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl font-bold text-gray-900 mb-4">Shopping Cart</h1>
+                    <p class="text-xl text-gray-600">Review your items before checkout</p>
+                </div>
+                
+                <div id="cart-items" class="bg-white rounded-2xl shadow-lg p-8">
+                    <!-- Cart items will be dynamically generated -->
+                </div>
+                
+                <div class="mt-8 bg-white rounded-2xl shadow-lg p-8">
+                    <div class="flex justify-between items-center text-2xl font-bold mb-6">
+                        <span>Total: </span>
+                        <span id="cart-total" class="text-smart-green">$0.00</span>
+                    </div>
+                    <button onclick="checkout()" class="btn-primary w-full text-white py-4 px-8 rounded-xl font-semibold text-lg">
+                        Proceed to Checkout 🚀
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page">
+        <section class="py-20 bg-gray-50 min-h-screen">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
+                    <div>
+                        <h1 class="text-5xl font-bold text-gray-900 mb-6">About SmartCart</h1>
+                        <p class="text-lg text-gray-600 mb-6">SmartCart is a next-generation grocery platform that combines cutting-edge technology with exceptional user experience. Built with modern web technologies, our platform delivers lightning-fast performance and seamless shopping experience.</p>
+                        <p class="text-lg text-gray-600 mb-8">Our mission is to make grocery shopping effortless, efficient, and enjoyable for everyone. With AI-powered recommendations and premium quality products, we're revolutionizing how people shop for groceries.</p>
+                        <button class="btn-primary text-white px-8 py-4 rounded-xl font-semibold" onclick="showPage('contact')">Contact Us</button>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Built With</h3>
+                        <div class="grid grid-cols-3 gap-8">
+                            <div class="tech-icon text-center">
+                                <div class="w-16 h-16 bg-orange-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-white font-bold text-xl">HTML</span>
+                                </div>
+                                <p class="font-medium">HTML5</p>
+                            </div>
+                            <div class="tech-icon text-center">
+                                <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-white font-bold text-xl">CSS</span>
+                                </div>
+                                <p class="font-medium">CSS3</p>
+                            </div>
+                            <div class="tech-icon text-center">
+                                <div class="w-16 h-16 bg-yellow-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-white font-bold text-xl">JS</span>
+                                </div>
+                                <p class="font-medium">JavaScript</p>
+                            </div>
+                            <div class="tech-icon text-center">
+                                <div class="w-16 h-16 bg-green-600 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-white font-bold text-xl">Node</span>
+                                </div>
+                                <p class="font-medium">Node.js</p>
+                            </div>
+                            <div class="tech-icon text-center">
+                                <div class="w-16 h-16 bg-green-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-white font-bold text-xl">DB</span>
+                                </div>
+                                <p class="font-medium">MongoDB</p>
+                            </div>
+                            <div class="tech-icon text-center">
+                                <div class="w-16 h-16 bg-purple-500 rounded-xl flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-white font-bold text-xl">API</span>
+                                </div>
+                                <p class="font-medium">REST API</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Checkout Journey -->
+                <div class="py-20 bg-white rounded-2xl shadow-lg">
+                    <div class="max-w-6xl mx-auto px-8">
+                        <div class="text-center mb-16">
+                            <h2 class="text-4xl font-bold text-gray-900 mb-4">Simple Checkout Process</h2>
+                            <p class="text-xl text-gray-600">Four easy steps to get your groceries delivered</p>
+                        </div>
+                        <div class="grid md:grid-cols-4 gap-8">
+                            <div class="text-center">
+                                <div class="step-circle w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-6">1</div>
+                                <h3 class="text-xl font-semibold mb-4">🛒 Cart</h3>
+                                <p class="text-gray-600">Add your favorite products to cart with one click</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="step-circle w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-6">2</div>
+                                <h3 class="text-xl font-semibold mb-4">🚚 Delivery</h3>
+                                <p class="text-gray-600">Choose your preferred delivery time and address</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="step-circle w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-6">3</div>
+                                <h3 class="text-xl font-semibold mb-4">💳 Payment</h3>
+                                <p class="text-gray-600">Secure payment with multiple options available</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="step-circle w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-6">4</div>
+                                <h3 class="text-xl font-semibold mb-4">✅ Confirmation</h3>
+                                <p class="text-gray-600">Get instant confirmation and track your order</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    
+
+    <!-- Product Details Modal -->
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-8">
+                <!-- Modal Header -->
+                <div class="flex justify-between items-center mb-6">
+                    <h2 id="modal-title" class="text-3xl font-bold text-gray-900"></h2>
+                    <button onclick="closeProductModal()" class="text-gray-500 hover:text-gray-700 text-2xl">✕</button>
+                </div>
+                
+                <!-- Modal Content -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Product Image -->
+                    <div class="relative">
+                        <img id="modal-image" src="" alt="" class="w-full h-80 object-cover rounded-lg">
+                        <div class="absolute top-4 right-4 bg-smart-green text-white px-3 py-1 rounded-full text-sm font-bold">
+                            Fresh & Organic
+                        </div>
+                    </div>
+                    
+                    <!-- Product Info -->
+                    <div>
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold mb-2">Description</h3>
+                            <p id="modal-description" class="text-gray-600 leading-relaxed"></p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold mb-2">Nutrition Info</h3>
+                            <p id="modal-nutrition" class="text-gray-600"></p>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold mb-2">Origin</h3>
+                            <p id="modal-origin" class="text-gray-600"></p>
+                        </div>
+                        
+                        <!-- Weight Selection -->
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold mb-3">Select Weight/Size</h3>
+                            <div id="weight-options" class="grid grid-cols-2 gap-2">
+                                <!-- Weight options will be populated here -->
+                            </div>
+                        </div>
+                        
+                        <!-- Quantity Selection -->
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold mb-3">Quantity</h3>
+                            <div class="flex items-center space-x-4">
+                                <button onclick="updateModalQuantity(-1)" class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors">
+                                    -
+                                </button>
+                                <span id="modal-quantity" class="text-xl font-semibold min-w-[2rem] text-center">1</span>
+                                <button onclick="updateModalQuantity(1)" class="w-10 h-10 bg-smart-green text-white rounded-full flex items-center justify-center hover:bg-green-600 transition-colors">
+                                    +
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Price and Add to Cart -->
+                        <div class="border-t pt-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <span class="text-sm text-gray-500">Price per unit:</span>
+                                    <div class="text-3xl font-bold text-smart-green" id="modal-price">$0.00</div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm text-gray-500">Total:</span>
+                                    <div class="text-2xl font-bold text-gray-900" id="modal-total">$0.00</div>
+                                </div>
+                            </div>
+                            
+                            <button onclick="addToCartFromModal()" class="w-full btn-primary text-white py-4 px-6 rounded-xl font-semibold text-lg hover:bg-green-600 transition-colors">
+                                🛒 Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-background text-white py-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-4 gap-8 lg:gap-12">
+                <!-- Brand Section -->
+                <div class="footer-section md:col-span-2 lg:col-span-1">
+                    <div class="footer-brand text-3xl font-bold mb-6">
+                        🛒 SmartCart
+                    </div>
+                    <p class="text-gray-300 mb-8 leading-relaxed">
+                        Revolutionizing grocery shopping with AI-powered recommendations, premium quality products, and lightning-fast delivery. Your trusted partner for fresh groceries.
+                    </p>
+                    <div class="flex space-x-3">
+                        <a href="#" class="social-icon">📘</a>
+                        <a href="#" class="social-icon">🐦</a>
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">💼</a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h4 class="footer-title text-white text-lg font-semibold mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" onclick="showPage('home')" class="footer-link text-gray-300 hover:text-white transition-colors duration-300">Home</a></li>
+                        <li><a href="#" onclick="showPage('products')" class="footer-link text-gray-300 hover:text-white transition-colors duration-300">Products</a></li>
+                        <li><a href="#" onclick="showPage('about')" class="footer-link text-gray-300 hover:text-white transition-colors duration-300">About Us</a></li>
+                        <li><a href="#" onclick="showPage('contact')" class="footer-link text-gray-300 hover:text-white transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div class="footer-section">
+                    <h4 class="footer-title text-white text-lg font-semibold mb-6">Customer Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="footer-link text-gray-300 hover:text-white transition-colors duration-300">Help Center</a></li>
+                        <li><a href="#" class="footer-link text-gray-300 hover:text-white transition-colors duration-300">Delivery Information</a></li>
+                        <li><a href="#" class="footer-link text-gray-300 hover:text-white transition-colors duration-300">Returns & Refunds</a></li>
+                        <li><a href="#" class="footer-link text-gray-300 hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link text-gray-300 hover:text-white transition-colors duration-300">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div class="footer-section">
+                    <h4 class="footer-title text-white text-lg font-semibold mb-6">Stay Connected</h4>
+                    <p class="text-gray-300 mb-4">Get exclusive deals and updates</p>
+                    <div class="space-y-3">
+                        <input type="email" placeholder="Enter your email" 
+                               class="newsletter-input w-full px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-smart-green">
+                        <button onclick="subscribeNewsletter()" class="newsletter-btn w-full px-4 py-3 rounded-lg font-semibold text-white">
+                            Subscribe Now
+                        </button>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-3">Join 50,000+ subscribers</p>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="mt-16 pt-8 border-t border-gray-700">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="text-gray-400 mb-4 md:mb-0">
+                        &copy; 2024 SmartCart. All rights reserved. Built with ❤️ for better grocery shopping.
+                    </div>
+                    <div class="flex flex-wrap justify-center md:justify-end gap-6 text-sm text-gray-500">
+                        <span class="flex items-center">🏆 Award Winning</span>
+                        <span class="flex items-center">🔒 Secure & Trusted</span>
+                        <span class="flex items-center">🌱 Eco-Friendly</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97bd4f5af25d9cd9',t:'MTc1NzMyMjU5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

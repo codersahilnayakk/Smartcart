@@ -43,5 +43,5 @@ This project demonstrates a clean and responsive UI for an e-commerce shopping c
 
 ## 👨‍💻 Author
 **Sahil Nayak**  
-📧 [support@carinspectionexpert.com](mailto:support@carinspectionexpert.com)  
+📧 [sahilnayak801@gmail.com](mailto:sahilnayak801@gmail.com)  
 🌐 [Portfolio](https://codersahilnayakk.github.io)
